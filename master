@@ -1,0 +1,50 @@
+import sys
+def main():
+  global eq #global
+  eq = input("Enter the equation: ")
+  a = int(input("Enter the lower bound: ")) #uses int
+  b = int(input("Enter the upper bound: "))
+  n = int(input("Enter the number of subintervals: "))
+  eq = eq.replace('^','**')
+  if b<a or b==a: #uses or and boolean operators and relational operators. Input validation
+    print("The lower bound must be smaller than the upper bound. Please restart the program.")
+    sys.exit()
+  try: #input validation
+    print("Trap Rule:","%.3f" %trap(eq,a,b,n))
+    print("%-10s" %"LRAM:","%.3f" %lram(a,b,n)) #Formatting Specifiers
+    print("%-10s" %"RRAM:","%.3f" %rram(a,b,n)) #Formatting Specifiers
+  except:
+    print("Please enter a correctly formatted equation. Use ^ for exponents, and make sure you include parentheses for for the order of operations. Also include * between things that are multiplied.")
+
+def trap(equation,a,b,n):
+  numberAdd = (b-a)/n #The multiplication factor. Subracts and divides
+  list1= [] #Initializes the list
+  x = a #The first f(x) value (aka the left length of the first trap)
+  for i in range (1,n+2): #for loop
+    list1.append(eval(equation))
+    x = x + numberAdd #add
+  for d in range (0,len(list1)):
+    if d != 0 and d != len(list1)-1: #uses and and boolean operators
+      list1[d] = 2*list1[d]
+  return (sum(list1)*(1/2)*numberAdd) #returns the area, a float
+
+def lram(a,b,n): #This is the LRAM function.
+  width = (b-a)/n #Width of each rect
+  list1 = []  #Initializes the list
+  x = a #The first f(x) value (aka the length of the first rect)
+  return ram(width,list1,x,n)
+  
+def rram(a,b,n): #This is the RRAM function.
+  width = (b-a)/n #Width of each rect
+  list1 = [] #Initializes the list
+  x = a + width #The first f(x) value (aka the length of the first rect)
+  return ram(width,list1,x,n)
+
+def ram(width,list1,x,n): #reusable function / stepwise refinement 
+  for i in range (1,n+1): #This for loop creates a list of each rect's area
+    list1.append(eval(eq)*width)
+    x = x + width
+  return sum(list1) #returns the sum of the list, a float
+main() #runs the script
+
+
