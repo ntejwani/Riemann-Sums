@@ -1,6 +1,6 @@
 import sys
 def main():
-  global eq #global
+	global eq #global
   eq = input("Enter the equation: ")
   a = int(input("Enter the lower bound: ")) #uses int
   b = int(input("Enter the upper bound: "))
